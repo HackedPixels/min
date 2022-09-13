@@ -207,6 +207,7 @@ class OnePassword {
 
     // show credentials dialog
     var signInFields = [
+      { placeholder: l('passwordManagerOnePasswordInstance'), id: 'instanceUrl', type: 'text'},
       { placeholder: l('email'), id: 'email', type: 'text' },
       { placeholder: l('password'), id: 'password', type: 'password' },
       { placeholder: l('secretKey'), id: 'secretKey', type: 'password' }
@@ -228,7 +229,7 @@ class OnePassword {
       }
     }
 
-    const process = new ProcessSpawner(path, ['account', 'add', '--address', 'my.1password.com', '--email', credentials.email, '--secret-key', credentials.secretKey, '--shorthand', 'min-autofill', '--signin', '--raw'], { OP_DEVICE: this.deviceID })
+    const process = new ProcessSpawner(path, ['account', 'add', '--address', credentials.instanceUrl,  '--email', credentials.email, '--secret-key', credentials.secretKey, '--shorthand', 'min-autofill', '--signin', '--raw'], { OP_DEVICE: this.deviceID })
 
     const key = await process.executeSyncInAsyncContext(credentials.password)
     if (!key) {
